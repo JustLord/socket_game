@@ -1,6 +1,2 @@
-#include "damage.h"
+#include "Damage.h"
 
-Damage::Damage()
-{
-
-}

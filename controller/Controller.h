@@ -3,8 +3,7 @@
 #include <QObject>
 
 #include "../network/Server.h"
-#include "Command.h"
-#include "Notifications.h"
+#include "messages/MessageBase.h"
 
 namespace controller {
 
@@ -12,12 +11,15 @@ class GameController : public QObject {
     Q_OBJECT
 public:
     GameController(const network::ServerShp& t_server, QObject* t_parent = nullptr);
-    void notifyPlayer(const QString& t_clientKey, const notification::GameStatusShp& t_status);
+
+public slots:
+    void notifyPlayer(const QString& t_playerUid, const controller::messages::MessageBaseShp& t_message);
+    void notifyPlayers(const QSharedPointer<QList<QString>>& t_playersUids, const controller::messages::MessageBaseShp& t_message);
 
 signals:
     void playerConnected(const QString& t_playerUid);
     void playerDissconnected(const QString& t_playerUid);
-    void hasCommand(const QString& t_playerUid, const command::CommandShp& t_command);
+    void hasCommand(const QString& t_playerUid, const QSharedPointer<controller::messages::MessageBase>& t_command);
 
 private:
     void processConnected(const QString& t_playerUid);

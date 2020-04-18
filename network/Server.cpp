@@ -23,7 +23,6 @@ void Server::startListen()
 
 void Server::notifyPlayer(const QString& t_clientKey, const QString& t_message)
 {
-    //  qDebug() << "<< " << t_message;
     m_clients[t_clientKey]->sendTextMessage(t_message);
 }
 
@@ -48,7 +47,6 @@ void Server::processTextMessage(const QString& t_message)
     auto client = qobject_cast<QWebSocket*>(sender());
     const auto& clientUid = m_clientToClientUid[client];
 
-    //  qDebug() << clientUid << " >> " << t_message;
     emit hasMessage(clientUid, t_message);
 }
 

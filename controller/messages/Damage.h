@@ -1,5 +1,6 @@
-#ifndef DAMAGE_H
-#define DAMAGE_H
+#pragma once
+
+namespace controller::messages {
 
 
 class Damage
@@ -7,5 +8,4 @@ class Damage
 public:
     Damage();
 };
-
-#endif // DAMAGE_H
+}

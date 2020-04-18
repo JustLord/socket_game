@@ -16,6 +16,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    controller/messages/Damage.cpp \
+    controller/messages/MessageBase.cpp \
+    controller/messages/Move.cpp \
+    controller/messages/Rename.cpp \
+    controller/messages/Shot.cpp \
+    controller/messages/Status.cpp \
     network/Server.cpp \
         main.cpp \
     logic/Game.cpp \
@@ -27,11 +33,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    controller/Notifications.h \
+    controller/messages/Damage.h \
+    controller/messages/MessageBase.h \
+    controller/messages/Move.h \
+    controller/messages/Rename.h \
+    controller/messages/Shot.h \
+    controller/messages/Status.h \
     logic/Bullet.h \
     logic/Player.h \
     logic/Game.h \
     controller/Controller.h \
-    controller/Command.h \
     network/Server.h \
     global.h

@@ -5,7 +5,8 @@ namespace logic {
 struct Bullet {
     double x;
     double y;
-    double radians;
+    double route;
+    int damage;
 };
 
 }

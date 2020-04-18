@@ -1,38 +1,20 @@
 #pragma once
 
 #include <QJsonArray>
-#include <QJsonObject>
-#include <QList>
-#include <QSharedPointer>
 
-#include "global.h"
+#include "MessageBase.h"
 
-namespace controller::notification {
+namespace controller::messages {
 
-struct PlayerStatus {
+struct PlayerState {
     double x;
     double y;
     QString name;
     QString uid;
 };
 
-struct GameStatus {
-    QList<PlayerStatus> players;
-};
-
-using GameStatusShp = QSharedPointer<GameStatus>;
-
-template <class T>
-QJsonObject toJsonObject(const QSharedPointer<T>& t_ptr)
-{
-    return toJsonObject<T>(*t_ptr);
-}
-
-template <class T>
-QJsonObject toJsonObject(const T& t_object);
-
 template <>
-inline QJsonObject toJsonObject(const PlayerStatus& t_object)
+inline QJsonObject toJsonObject(const PlayerState& t_object)
 {
     QJsonObject jsonObject;
     jsonObject.insert("x", t_object.x);
@@ -43,8 +25,20 @@ inline QJsonObject toJsonObject(const PlayerStatus& t_object)
     return jsonObject;
 }
 
+class State final : public MessageBase {
+public:
+    State() = default;
+    State(QList<PlayerState> t_players);
+    [[nodiscard]] MessageType messageType() const override;
+
+public:
+        QList<PlayerState> players;
+};
+
+using GameStatusShp = QSharedPointer<State>;
+
 template <>
-inline QJsonObject toJsonObject(const GameStatus& t_object)
+inline QJsonObject toJsonObject(const State& t_object)
 {
     QJsonArray jsonArray;
     for (const auto& playerStatus : t_object.players) {

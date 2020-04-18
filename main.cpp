@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QThread>
 #include <QTimer>
 
 #include "logic/Game.h"
@@ -11,6 +12,8 @@ int main(int argc, char* argv[])
     const auto server = network::ServerShp::create();
     const auto game = logic::GameShp::create(controller::GameControllerShp::create(server));
 
-    QTimer::singleShot(0, [&] { server->startListen(); });
+    QTimer::singleShot(0, [&] {
+        server->startListen();
+    });
     return a.exec();
 }
