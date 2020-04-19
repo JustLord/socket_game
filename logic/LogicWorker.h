@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <memory>
+#include <mutex>
 
 #include "Bullet.h"
 #include "Player.h"
@@ -26,6 +27,12 @@ class State;
 using StateShp = QSharedPointer<State>;
 
 }
+
+struct Callision {
+    QString fromUser;
+    QString toUser;
+    int damage {};
+};
 
 namespace logic {
 
@@ -53,11 +60,16 @@ private:
     void notifyAllPlayers(const controller::messages::MessageBaseShp& t_message);
 
 private:
-    bool m_needUpdate;
+    std::atomic<bool> m_needUpdate;
     std::unique_ptr<QTimer> m_timer;
-    QList<Bullet> m_bullets;
+
+    std::vector<Bullet> m_bullets;
+
     QList<QString> m_playersKeys;
     QHash<QString, Player> m_players;
+
+    std::mutex m_callisionMutex;
+    std::vector<Callision> m_callisions;
 };
 
 }

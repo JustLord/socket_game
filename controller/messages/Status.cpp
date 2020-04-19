@@ -7,8 +7,9 @@ REGISTRY_SERIALIZER(MessageType::State, [](const QSharedPointer<MessageBase>& t_
     return toJsonObject(object);
 })
 
-State::State(QList<PlayerState> t_players)
+State::State(QList<PlayerState> t_players, QList<Damage> t_damages)
     : players {std::move(t_players)}
+    , damages {std::move(t_damages)}
 {
 }
 

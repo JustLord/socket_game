@@ -26,6 +26,7 @@ void GameController::notifyPlayers(const QSharedPointer<QList<QString>>& t_playe
     QJsonDocument document; //rapidjson
     document.setObject(messages::MessageBase::serialize(t_message));
     const auto message = QString(document.toJson(QJsonDocument::Compact));
+
     for (const auto& playerUid : *t_playersUids) {
         m_server->notifyPlayer(playerUid, message);
     }
