@@ -10,11 +10,14 @@ using namespace logic;
 
 LogicWorker::LogicWorker(QObject* parent)
     : QObject(parent)
+    , m_timer {std::make_unique<QTimer>(this)}
 {
+    connect(m_timer.get(), &QTimer::timeout, this, &LogicWorker::logicIteration);
 }
 
 void LogicWorker::run()
 {
+    m_timer->start(10);
 }
 
 void logic::LogicWorker::processPlayerConnect(const QString& t_playerKey)
@@ -47,13 +50,21 @@ void LogicWorker::processCommand(const QString& t_playerKey, const MessageBaseSh
     }
 }
 
+void LogicWorker::logicIteration()
+{
+    if (!m_needUpdate) {
+        return;
+    }
+
+    notifyAllPlayers(qSharedPointerCast<controller::messages::MessageBase>(generateStatus()));
+}
+
 void LogicWorker::processPlayerMove(const QString& t_playerKey, const controller::messages::MoveShp& t_playerMove)
 {
     auto& player = m_players[t_playerKey];
     player.x = t_playerMove->x;
     player.y = t_playerMove->y;
 
-    notifyAllPlayers(qSharedPointerCast<controller::messages::MessageBase>(generateStatus()));
     m_needUpdate = true;
 }
 
