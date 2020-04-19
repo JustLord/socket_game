@@ -22,6 +22,7 @@ SOURCES += \
     controller/messages/Rename.cpp \
     controller/messages/Shot.cpp \
     controller/messages/Status.cpp \
+    logic/LogicWorker.cpp \
     network/Server.cpp \
         main.cpp \
     logic/Game.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     controller/messages/Shot.h \
     controller/messages/Status.h \
     logic/Bullet.h \
+    logic/LogicWorker.h \
     logic/Player.h \
     logic/Game.h \
     controller/Controller.h \

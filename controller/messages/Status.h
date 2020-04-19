@@ -32,10 +32,10 @@ public:
     [[nodiscard]] MessageType messageType() const override;
 
 public:
-        QList<PlayerState> players;
+    QList<PlayerState> players;
 };
 
-using GameStatusShp = QSharedPointer<State>;
+using StateShp = QSharedPointer<State>;
 
 template <>
 inline QJsonObject toJsonObject(const State& t_object)
